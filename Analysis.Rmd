@@ -1,0 +1,52 @@
+---
+title: "Analysis"
+author: "Marco Yip"
+date: "2023-02-15"
+output: html_document
+---
+#github: https://github.com/marcoyip21
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Part 1
+
+#Importing Sequences.csv
+```{r}
+Data=read.csv("/Users/marcoyip/Desktop/BIOL 432/Assignment6/Sequences.csv")
+library(dplyr)
+```
+
+#Counting number of each base pair and printing number of each nucelotide as a table for each sequence
+```{r}
+Count=Data%>%
+  group_by(Name)%>%
+  mutate(C=nchar(Sequence)-nchar(gsub("C","",Sequence)),A=nchar(Sequence)-nchar(gsub("A","",Sequence)), 
+T=nchar(Sequence)-nchar(gsub("T","",Sequence)),
+G=nchar(Sequence)-nchar(gsub("G","",Sequence)))
+
+print(Count)
+```
+
+#Printing seqence
+```{r}
+Count$Sequence
+```
+
+#Calculating GC content 
+```{r}
+GC_content=Count%>%
+  mutate(GCcontent=nchar(gsub("C|G","",Sequence))/nchar(Sequence)*100)%>%
+  rename(SequenceID=Name)%>%
+  select(SequenceID,GCcontent)
+
+print(GC_content)
+```
+
+#Wiki page = https://en.wikipedia.org/wiki/Borrelia_burgdorferi
+
+#Part 2
+
+
+
